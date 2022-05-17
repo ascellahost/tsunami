@@ -1,2 +1,3 @@
-
-export interface Data { auth: string, }
+export interface Data {
+  auth: string;
+}

@@ -1,2 +1,3 @@
-
-export interface DomainData { domain: string, }
+export interface DomainData {
+  domain: string;
+}

@@ -1,2 +1,3 @@
-
-export interface LangQuery { lang: string | null, }
+export interface LangQuery {
+  lang: string | null;
+}

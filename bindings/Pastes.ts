@@ -1,2 +1,4 @@
-
-export interface Pastes { id: string, content: string, }
+export interface Pastes {
+  id: string;
+  content: string;
+}

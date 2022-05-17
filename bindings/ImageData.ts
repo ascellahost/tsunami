@@ -1,2 +1,3 @@
-
-export interface ImageData { image_id: number, }
+export interface ImageData {
+  image_id: number;
+}

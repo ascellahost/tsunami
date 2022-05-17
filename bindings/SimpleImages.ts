@@ -1,2 +1,4 @@
-
-export interface SimpleImages { id: number, vanity: string, }
+export interface SimpleImages {
+  id: number;
+  vanity: string;
+}

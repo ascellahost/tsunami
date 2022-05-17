@@ -1,2 +1,3 @@
-
-export interface UploadStyleData { style: number, }
+export interface UploadStyleData {
+  style: number;
+}

@@ -1,2 +1,3 @@
-
-export interface ReportData { id: number, }
+export interface ReportData {
+  id: number;
+}

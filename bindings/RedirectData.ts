@@ -1,2 +1,4 @@
-
-export interface RedirectData { vanity: string, to: string, }
+export interface RedirectData {
+  vanity: string;
+  to: string;
+}
