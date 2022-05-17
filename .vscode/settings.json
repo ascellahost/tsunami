@@ -1,0 +1,18 @@
+{
+  "editor.bracketPairColorization.enabled": true,
+  "explorer.compactFolders": true,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "create_image.rs": "create_*.rs",
+    "get_all_users.rs": "get_*.rs",
+    "set_autodelete.rs": "set_*.rs",
+    "Cargo.toml": "rust-toolchain.toml, Cargo.lock, .deepsource.toml, dprint.json, .gitignore, rustfmt.toml, .gitattributes, package.json, crowdin.yml, .env",
+    "package.json": "package-lock.json, yarn.lock"
+  }
+}
