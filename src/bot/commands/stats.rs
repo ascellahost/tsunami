@@ -64,7 +64,7 @@ pub struct AscellaStats {
     #[openapi(example = "rustc 1.62.0-nightly (4c60a0ea5 2022-05-04)")]
     pub(crate) rustc: String,
     /// THe commit hash used by ascella
-    #[openapi(example = "https://github.com/Tricked-dev/ascella/commit/e968eb666fa3b0ea974248c30931a9210919fd44")]
+    #[openapi(example = "https://github.com/ascellahost/tsunami/commit/e968eb666fa3b0ea974248c30931a9210919fd44")]
     pub(crate) commit_hash: String,
 }
 
@@ -94,7 +94,7 @@ impl AscellaStats {
             fast: true,
             rustc: env!("RUST_DATA").to_owned(),
             commit_hash: format!(
-                "https://github.com/Tricked-dev/ascella/commit/{hash}",
+                "https://github.com/ascellahost/tsunami/commit/{hash}",
                 hash = env!("GIT_HASH")
             ),
         }

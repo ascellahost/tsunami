@@ -89,7 +89,7 @@ pub async fn start_actix() -> std::io::Result<()> {
                 }),
                 license: Some(License {
                     name: Some("AGPL-3.0".into()),
-                    url: Some("https://github.com/Tricked-dev/ascella/blob/master/LICENSE".into()),
+                    url: Some("https://github.com/ascellahost/tsunami/blob/master/LICENSE".into()),
                 }),
                 ..Default::default()
             },
