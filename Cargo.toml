@@ -22,7 +22,6 @@ strum = "0.24.0"
 strum_macros = "0.24.0"
 
 tokio = { version = "1.18.2", features = ["rt-multi-thread", "macros"] }
-tokio-cron-scheduler = "0.7.0"
 tokio-pg-mapper = "0.2.0"
 tokio-pg-mapper-derive = "0.2.0"
 tokio-postgres = "0.7.6"
