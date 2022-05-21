@@ -38,8 +38,8 @@ lazy_static! {
     pub static ref S3: Arc<S3Host> = Arc::new(
         S3Host::new(
             &dotenv::var("S3_BUCKET").unwrap_or_else(|_| "ascella".to_owned()),
-            "EU1",
-            "https://gateway.eu1.storjshare.io",
+            &dotenv::var("S3_REGION").unwrap_or_else(|_| "EU1".to_owned()),
+            &dotenv::var("S3_URL").unwrap_or_else(|_| "https://gateway.eu1.storjshare.io".to_owned()),
             &dotenv::var("S3_ID").unwrap(),
             &dotenv::var("S3_SECRET").unwrap(),
         )
@@ -102,7 +102,6 @@ impl S3Host {
             S3.bucket
                 .put_object_with_content_type(format!("/{}", &file_name_clone), &bytes, &content_type_clone)
                 .await
-                .map_err(|_| FileHostingError::AnError)
                 .unwrap();
         });
 

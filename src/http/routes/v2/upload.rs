@@ -14,13 +14,13 @@ const ZWS_CHARS: [char; 4] = ['\u{200C}', '\u{200B}', '\u{200D}', '\u{2060}'];
 /// 2 = gfycat
 /// 3 = zws
 
-fn default_url() -> String {
+pub fn default_url() -> String {
     ran_str(8)
 }
-fn ulid_url() -> String {
+pub fn ulid_url() -> String {
     ulid::Ulid::new().to_string()
 }
-fn gfycat_url() -> String {
+pub fn gfycat_url() -> String {
     lazy_static! {
         static ref ANIMALS_ARRAY: Vec<&'static str> = ANIMALS.lines().collect::<Vec<&str>>();
         static ref ADJECTIVES_ARRAY: Vec<&'static str> = ADJECTIVES.lines().collect::<Vec<&str>>();
@@ -34,7 +34,7 @@ fn gfycat_url() -> String {
     s.push(ANIMALS_ARRAY.choose(&mut rng).unwrap());
     s.join("-")
 }
-fn zws_url() -> String {
+pub fn zws_url() -> String {
     let mut rng = rand::thread_rng();
     let mut s = String::new();
     for _ in 0..9 {
@@ -43,13 +43,14 @@ fn zws_url() -> String {
     s
 }
 pub fn hacker_url() -> String {
+    let rng = &mut rand::thread_rng();
     let mut clone = FUNNY_WORDS.clone();
 
-    clone.shuffle(&mut rand::thread_rng());
+    clone.shuffle(rng);
 
     clone
         .into_iter()
-        .take(rand::thread_rng().gen_range(4..10))
+        .take(rng.gen_range(4..10))
         .collect::<Vec<&str>>()
         .join("")
 }
@@ -112,6 +113,7 @@ pub async fn post(
             .await
             .map_err(|_| Error::DatabaseError)?;
         // i dont want to have to do this but its neccasry
+        #[cfg(not(debug_assertions))]
         tokio::spawn(send_text_webhook(format!(
             "**[IMAGE]** [image](<https://ascella.wtf/v2/ascella/view/{image}.png>) **[OWNER]** {name} ({id})",
             image = &img.vanity,

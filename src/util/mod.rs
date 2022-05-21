@@ -119,7 +119,7 @@ impl FromRequest for AccessToken {
                 }
             }
 
-            Err(Error::BadRequest)
+            Err(Error::NotAuthorized)
         })
     }
 
