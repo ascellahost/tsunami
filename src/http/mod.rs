@@ -46,6 +46,12 @@ impl ImageCache {
     }
 }
 
+impl Default for ImageCache {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 pub fn set_endpoints(cfg: &mut web::ServiceConfig) {
     cfg.service(config::get)
         .service(domain::post)

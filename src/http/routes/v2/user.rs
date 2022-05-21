@@ -50,7 +50,7 @@ pub async fn post(data: AccessToken, modify: web::Json<ModifyUser>) -> Result<Ok
         set_deleteall::exec(data.id(), *deleteall).await?;
     }
     if let Some(upload_key) = &modify.upload_key {
-        set_upload_key::exec(data.id(), &upload_key).await?;
+        set_upload_key::exec(data.id(), upload_key).await?;
     }
     if let Some(lang) = &modify.lang {
         set_language::exec(data.id(), lang.clone()).await?;

@@ -32,7 +32,7 @@ pub async fn execute(_client: &Client, _cmd: &ApplicationCommand, user: Users) -
         Some(
             user.upload_key
                 .as_ref()
-                .unwrap_or(&new_key.unwrap_or("please wait 120 seconds".to_owned()))
+                .unwrap_or(&new_key.unwrap_or_else(|| "please wait 120 seconds".to_owned()))
                 .to_string(),
         ),
     );

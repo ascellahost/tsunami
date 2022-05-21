@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use validator::{Validate, ValidationError};
+use validator::Validate;
 
 /// NodifyUser
 ///

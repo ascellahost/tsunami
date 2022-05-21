@@ -1,3 +1,4 @@
+use bitflags::bitflags;
 use strum::IntoEnumIterator;
 use twilight_model::channel::embed::Embed;
 use twilight_util::builder::embed::EmbedBuilder;
@@ -242,7 +243,11 @@ impl BotResponse {
     }
 }
 
-use bitflags::bitflags;
+impl Default for BotResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
 bitflags! {
     pub struct BadgeFlags: u32 {

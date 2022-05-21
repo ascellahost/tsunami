@@ -27,7 +27,7 @@ use std::{
     fmt::{self, Display},
     pin::Pin,
 };
-use validator::{ValidationError, ValidationErrors, ValidationErrorsKind};
+use validator::{ValidationErrors, ValidationErrorsKind};
 
 //Users
 
@@ -200,7 +200,7 @@ impl Error {
             Error::BadRequest => "Bad request".into(),
             Error::RateLimit { message } => format!("Rate limit exceeded {message}"),
             Error::Four04 { message } => format!("404: {message}"),
-            Error::BadAnyhowRequest { message } => format!("{message}"),
+            Error::BadAnyhowRequest { message } => message.to_string(),
             Error::ValidationError(..) => "Validation error".into(),
             _ => "".into(),
         }

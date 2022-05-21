@@ -1,6 +1,5 @@
 use std::time::Instant;
 
-use tracing::Level;
 use tsunami::{bot::start_bot, cron::start_cron, http::start_actix, prelude::START_TIME};
 
 fn main() -> std::io::Result<()> {

@@ -1,6 +1,5 @@
 use std::time::Duration;
 
-use futures::stream;
 use queries::get_images::delete_all;
 use tokio::time;
 

@@ -1,23 +1,9 @@
-use std::sync::Mutex;
-
-use actix_cors::Cors;
-use actix_web::{middleware, App, ResponseError};
 use criterion::{criterion_group, criterion_main, Criterion};
 use futures::future::join_all;
-use paperclip::{
-    actix::web,
-    v2::models::{Contact, DefaultApiRaw, Info, License, Tag},
-};
+
 use reqwest::multipart::{Form, Part};
 use tokio::fs::read;
-use tsunami::{
-    http::{
-        routes::v2::{openapi_3, *},
-        set_endpoints, ImageCache,
-    },
-    prelude::{Error, OpenApiExt, CLIENT},
-    ratelimit::{Governor, GovernorConfigBuilder},
-};
+use tsunami::prelude::CLIENT;
 
 fn bench_requests(c: &mut Criterion) {
     // We are using System here, since Runtime requires preinitialized tokio
