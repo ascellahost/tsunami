@@ -66,6 +66,8 @@ pub fn set_endpoints(cfg: &mut web::ServiceConfig) {
         .service(images::post)
         .service(ascella_stats::get)
         .service(lang::get)
+        .service(user::get)
+        .service(user::post)
         .service(upload_style::post)
         .service(
             web::scope("")
