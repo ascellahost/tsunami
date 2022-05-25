@@ -1,6 +1,6 @@
 use std::time::Instant;
 
-use tsunami::{bot::start_bot, cron::start_cron, http::start_actix, prelude::START_TIME};
+use tsunami::{start_actix, start_bot, start_cron, START_TIME};
 
 fn main() -> std::io::Result<()> {
     tracing_subscriber::fmt().init();

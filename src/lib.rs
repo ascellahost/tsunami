@@ -1,14 +1,19 @@
 #![feature(fmt_internals)]
 #![feature(test)]
 
-pub mod bot;
-pub mod cron;
-pub mod database;
-pub mod http;
-pub mod ratelimit;
-pub mod util;
+pub(crate) mod bot;
+pub(crate) mod cron;
+pub(crate) mod database;
+pub(crate) mod http;
+pub(crate) mod ratelimit;
+pub(crate) mod util;
 
-pub mod prelude {
+pub use bot::start_bot;
+pub use cron::start_cron;
+pub use http::start_actix;
+pub use prelude::{CLIENT, START_TIME};
+
+pub(crate) mod prelude {
     lazy_static! {
         pub static ref CLIENT: reqwest::Client = reqwest::Client::new();
         pub static ref START_TIME: OnceCell<Instant> = OnceCell::new();

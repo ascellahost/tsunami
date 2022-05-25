@@ -1,6 +1,8 @@
 use crate::prelude::*;
 use validator::Validate;
 
+use super::embed::EmbedData;
+
 /// NodifyUser
 ///
 /// Data needed to update the user!
@@ -21,4 +23,5 @@ pub struct ModifyUser {
     pub upload_key: Option<String>,
     #[validate(length(min = 2, max = 2))]
     pub lang: Option<String>,
+    pub embed: Option<EmbedData>,
 }

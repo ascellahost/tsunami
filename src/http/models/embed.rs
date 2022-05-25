@@ -6,8 +6,10 @@ use crate::prelude::*;
 #[derive(Deserialize, Apiv2Schema, Clone, TS)]
 #[ts(export)]
 pub struct EmbedData {
+    /// THe title of the embed this will be displayed
     #[openapi(example = "Hi")]
     pub title: Option<String>,
+    /// The link that is used in your embed
     #[allow(dead_code)]
     pub link: Option<String>,
     pub url: Option<String>,

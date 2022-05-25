@@ -35,9 +35,6 @@ impl ImageCache {
         self.key = key;
         self.content_type = content_type;
     }
-    pub fn get(&self) -> &[u8] {
-        &self.inner
-    }
     pub fn get_key(&self) -> &str {
         &self.key
     }

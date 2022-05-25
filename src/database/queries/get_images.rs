@@ -20,6 +20,21 @@ pub async fn exec(owner: i32, amount: i32, skip: i32) -> Result<Vec<SimpleImages
     Ok(rows)
 }
 
+pub async fn from_days(days: i32) -> Result<i64> {
+    let row = get_tokio_postgres()
+        .await
+        .query_one(
+            &format!(
+                "SELECT count(*) FROM images WHERE created > NOW() - INTERVAL '{} days'",
+                days,
+            ),
+            &[],
+        )
+        .await?;
+
+    Ok(row.get("count"))
+}
+
 pub async fn delete_all(owner: i32, date: i32) -> Result<u64> {
     let row = get_tokio_postgres()
         .await

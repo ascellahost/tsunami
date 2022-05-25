@@ -1,6 +1,7 @@
 #![allow(deprecated)]
 
 use crate::prelude::*;
+use queries::get_images::from_days;
 use tokio::join;
 use twilight_embed_builder::EmbedFieldBuilder;
 
@@ -28,8 +29,7 @@ pub fn command() -> twilight_model::application::command::Command {
     .build()
 }
 
-#[derive(Serialize, Deserialize, Apiv2Schema)]
-
+#[derive(Serialize, Deserialize, Apiv2Schema, Default)]
 pub struct AscellaStats {
     /// Total amount of images uploade to ascella  (includes redirects)
     #[openapi(example = "6441")]
@@ -44,6 +44,9 @@ pub struct AscellaStats {
     /// Amount of userst that ran /redeem
     #[openapi(example = "100")]
     pub(crate) total_users: i64,
+    /// Uploads in last 24 hours
+    #[openapi(example = "5000")]
+    pub(crate) day_uploads: i64,
     /// The unix timestamp ascella was created
     #[openapi(example = "1629305469")]
     pub(crate) created_date: i64,
@@ -66,21 +69,29 @@ pub struct AscellaStats {
     /// THe commit hash used by ascella
     #[openapi(example = "https://github.com/ascellahost/tsunami/commit/e968eb666fa3b0ea974248c30931a9210919fd44")]
     pub(crate) commit_hash: String,
+    /// Mesage of the day (can contain html)
+    #[openapi(example = "Stay awesome")]
+    pub(crate) motd: String,
 }
 
 impl AscellaStats {
-    pub fn new(total_uploads: i64, total_domains: i64, total_users: i64, total_views: i64) -> Self {
+    pub fn new(total_uploads: i64, total_domains: i64, total_users: i64, total_views: i64, day_uploads: i64) -> Self {
         let mem = ProcessCommand::new("ps")
             .args(vec!["-o", "rss="])
             .arg(format!("{}", process::id()))
-            .output()
-            .unwrap();
-        let usage = std::str::from_utf8(&mem.stdout).unwrap();
+            .output();
+        let usage = if let Ok(mem) = mem {
+            std::str::from_utf8(&mem.stdout).unwrap_or_default().to_owned()
+        } else {
+            String::new()
+        };
         Self {
             total_uploads,
             total_domains,
             total_users,
             total_views,
+            day_uploads,
+            motd: "Stay awesome!".to_owned(),
             created_date: 1629305469,
             usage: bytes_to(if let Ok(r) = usage.trim_end().parse::<u128>().map(|x| x * 1024) {
                 r
@@ -100,17 +111,19 @@ impl AscellaStats {
         }
     }
     pub async fn new_with_stats() -> Self {
-        let (image_count, domains_count, users_count, total_views) = join!(
+        let (image_count, domains_count, users_count, total_views, day_uploads) = join!(
             get_count("images"),
             get_count("domains"),
             get_count("users"),
-            get_total_views::exec()
+            get_total_views::exec(),
+            from_days(1)
         );
         AscellaStats::new(
             image_count,
             domains_count,
             users_count,
             total_views.expect("Failed to get total views"),
+            day_uploads.unwrap(),
         )
     }
 }
@@ -120,7 +133,13 @@ pub async fn execute(_client: &Client, _cmd: &ApplicationCommand) -> Result<BotR
 
     let embed = create_embed()
         .title("Cool stats")
-        .field(EmbedFieldBuilder::new("Uploads", &stats.total_uploads.to_string()).inline())
+        .field(
+            EmbedFieldBuilder::new(
+                "Uploads",
+                format!("{} today: {}", stats.total_uploads, stats.day_uploads),
+            )
+            .inline(),
+        )
         .field(EmbedFieldBuilder::new("Domains", &stats.total_domains.to_string()).inline())
         .field(EmbedFieldBuilder::new("Users", &stats.total_users.to_string()).inline())
         .field(EmbedFieldBuilder::new("Views", &stats.total_views.to_string()).inline())

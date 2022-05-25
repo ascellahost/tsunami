@@ -3,7 +3,7 @@ use futures::future::join_all;
 
 use reqwest::multipart::{Form, Part};
 use tokio::fs::read;
-use tsunami::prelude::CLIENT;
+use tsunami::CLIENT;
 
 fn bench_requests(c: &mut Criterion) {
     // We are using System here, since Runtime requires preinitialized tokio

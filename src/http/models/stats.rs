@@ -27,3 +27,14 @@ pub struct DisplayEmbed {
     pub title: Option<String>,
     pub url: Option<String>,
 }
+
+impl From<Embeds> for DisplayEmbed {
+    fn from(embed: Embeds) -> Self {
+        DisplayEmbed {
+            color: embed.color,
+            description: embed.description,
+            title: embed.title,
+            url: embed.url,
+        }
+    }
+}
