@@ -196,6 +196,10 @@ where
                     "127.0.0.0".parse().unwrap()
                 }
             });
+        if req.path().contains("/v2/ascella/view") {
+            let fut = self.service.call(req);
+            return future::Either::Right(fut);
+        }
         match self.limiter.check_key(&ip) {
             Ok(_) => {
                 let fut = self.service.call(req);
