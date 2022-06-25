@@ -6,6 +6,12 @@ edition = "2021"
 [features]
 openssl-vendored = ["openssl/vendored"]
 
+
+[profile.release]
+debug = 1
+debuginfo-level = 1
+lto = "thin"
+
 [[bin]]
 name = "ascella"
 path = "src/main.rs"
